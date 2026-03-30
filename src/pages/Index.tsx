@@ -1,16 +1,49 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+import { useEffect } from 'react';
+import { useMessenger } from '@/hooks/useMessenger';
+import ConversationSidebar from '@/components/messenger/ConversationSidebar';
+import ChatArea from '@/components/messenger/ChatArea';
+import ControlPanel from '@/components/messenger/ControlPanel';
 
-// IMPORTANT: Fully REPLACE this with your own code
-const PlaceholderIndex = () => {
-  // PLACEHOLDER: Replace this entire return statement with the user's app.
-  // The inline background color is intentionally not part of the design system.
+const Index = () => {
+  const {
+    conversations,
+    active,
+    activeId,
+    setActiveId,
+    createConversation,
+    updateConversation,
+    deleteConversation,
+    sendMessage,
+    triggerResponse,
+  } = useMessenger();
+
+  // Spacebar trigger for manual mode
+  useEffect(() => {
+    const handler = (e: KeyboardEvent) => {
+      if (e.code === 'Space' && active && !active.autoMode) {
+        const tag = (e.target as HTMLElement).tagName;
+        if (tag === 'INPUT' || tag === 'TEXTAREA') return;
+        e.preventDefault();
+        triggerResponse();
+      }
+    };
+    window.addEventListener('keydown', handler);
+    return () => window.removeEventListener('keydown', handler);
+  }, [active, triggerResponse]);
+
   return (
-    <div className="flex min-h-screen items-center justify-center" style={{ backgroundColor: '#fcfbf8' }}>
-      <img data-lovable-blank-page-placeholder="REMOVE_THIS" src="/placeholder.svg" alt="Your app will live here!" />
+    <div className="flex h-screen w-full overflow-hidden bg-background">
+      <ConversationSidebar
+        conversations={conversations}
+        activeId={activeId}
+        onSelect={setActiveId}
+        onCreate={createConversation}
+        onDelete={deleteConversation}
+      />
+      <ChatArea conversation={active} onSend={sendMessage} />
+      <ControlPanel conversation={active} onUpdate={updateConversation} onTrigger={triggerResponse} />
     </div>
   );
 };
-
-const Index = PlaceholderIndex;
 
 export default Index;
