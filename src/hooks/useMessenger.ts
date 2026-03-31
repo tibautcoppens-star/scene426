@@ -32,6 +32,8 @@ export function useMessenger() {
     },
   ]);
   const [activeId, setActiveId] = useState<string | null>('1');
+  const [isTyping, setIsTyping] = useState(false);
+  const typingTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const active = conversations.find((c) => c.id === activeId) ?? null;
 
