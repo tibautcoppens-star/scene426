@@ -1,7 +1,29 @@
-import { useState, useCallback, useRef } from 'react';
+import { useState, useCallback, useRef, useEffect } from 'react';
 import { Conversation, Message } from '@/types/messenger';
 
+const STORAGE_KEY = 'messenger-conversations';
+const ACTIVE_KEY = 'messenger-active-id';
+
 const createId = () => Math.random().toString(36).slice(2, 10);
+
+const defaultConversations: Conversation[] = [
+  {
+    id: '1',
+    name: '\nWILLEM DIE MEDOCK MAECKTE\n\n',
+    messages: [],
+    scriptedResponses: [''],
+    autoMode: true,
+    currentResponseIndex: 0,
+  },
+  {
+    id: '2',
+    name: 'DE TOEKOMST ZIJN WIJ',
+    messages: [],
+    scriptedResponses: [''],
+    autoMode: true,
+    currentResponseIndex: 0,
+  },
+];
 
 const defaultConversation = (): Conversation => ({
   id: createId(),
@@ -12,26 +34,27 @@ const defaultConversation = (): Conversation => ({
   currentResponseIndex: 0,
 });
 
+function loadConversations(): Conversation[] {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (raw) {
+      const parsed = JSON.parse(raw);
+      return parsed.map((c: any) => ({
+        ...c,
+        messages: c.messages.map((m: any) => ({ ...m, timestamp: new Date(m.timestamp) })),
+      }));
+    }
+  } catch {}
+  return defaultConversations;
+}
+
+function loadActiveId(): string | null {
+  return localStorage.getItem(ACTIVE_KEY) || '1';
+}
+
 export function useMessenger() {
-  const [conversations, setConversations] = useState<Conversation[]>([
-    {
-      id: '1',
-      name: '\nWILLEM DIE MEDOCK MAECKTE\n\n',
-      messages: [],
-      scriptedResponses: [''],
-      autoMode: true,
-      currentResponseIndex: 0,
-    },
-    {
-      id: '2',
-      name: 'DE TOEKOMST ZIJN WIJ',
-      messages: [],
-      scriptedResponses: [''],
-      autoMode: true,
-      currentResponseIndex: 0,
-    },
-  ]);
-  const [activeId, setActiveId] = useState<string | null>('1');
+  const [conversations, setConversations] = useState<Conversation[]>(loadConversations);
+  const [activeId, setActiveId] = useState<string | null>(loadActiveId);
   const [isTyping, setIsTyping] = useState(false);
   const typingTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
