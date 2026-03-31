@@ -5,7 +5,7 @@ const createId = () => Math.random().toString(36).slice(2, 10);
 
 const defaultConversation = (): Conversation => ({
   id: createId(),
-  name: 'New Chat',
+  name: 'DE TOEKOMST ZIJN WIJ',
   messages: [],
   scriptedResponses: [''],
   autoMode: true,
@@ -13,8 +13,25 @@ const defaultConversation = (): Conversation => ({
 });
 
 export function useMessenger() {
-  const [conversations, setConversations] = useState<Conversation[]>([]);
-  const [activeId, setActiveId] = useState<string | null>(null);
+  const [conversations, setConversations] = useState<Conversation[]>([
+    {
+      id: '1',
+      name: '\nWILLEM DIE MEDOCK MAECKTE\n\n',
+      messages: [],
+      scriptedResponses: [''],
+      autoMode: true,
+      currentResponseIndex: 0,
+    },
+    {
+      id: '2',
+      name: 'DE TOEKOMST ZIJN WIJ',
+      messages: [],
+      scriptedResponses: [''],
+      autoMode: true,
+      currentResponseIndex: 0,
+    },
+  ]);
+  const [activeId, setActiveId] = useState<string | null>('1');
 
   const active = conversations.find((c) => c.id === activeId) ?? null;
 
