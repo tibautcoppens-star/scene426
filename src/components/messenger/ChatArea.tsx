@@ -8,7 +8,7 @@ interface Props {
   isTyping?: boolean;
 }
 
-export default function ChatArea({ conversation, onSend }: Props) {
+export default function ChatArea({ conversation, onSend, isTyping }: Props) {
   const [input, setInput] = useState('');
   const bottomRef = useRef<HTMLDivElement>(null);
 
