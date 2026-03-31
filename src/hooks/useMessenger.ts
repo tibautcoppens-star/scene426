@@ -60,6 +60,14 @@ export function useMessenger() {
 
   const active = conversations.find((c) => c.id === activeId) ?? null;
 
+  useEffect(() => {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(conversations));
+  }, [conversations]);
+
+  useEffect(() => {
+    if (activeId) localStorage.setItem(ACTIVE_KEY, activeId);
+  }, [activeId]);
+
   const createConversation = useCallback(() => {
     const c = defaultConversation();
     setConversations((prev) => [...prev, c]);
