@@ -13,7 +13,24 @@ const defaultConversation = (): Conversation => ({
 });
 
 export function useMessenger() {
-  const [conversations, setConversations] = useState<Conversation[]>([]);
+  const [conversations, setConversations] = useState<Conversation[]>([
+    {
+      id: '1',
+      name: 'WILLEM DIE MEDOCK MAECKTE',
+      messages: [],
+      scriptedResponses: [''],
+      autoMode: true,
+      currentResponseIndex: 0,
+    },
+    {
+      id: '2',
+      name: 'DE TOEKOMST ZIJN WIJ',
+      messages: [],
+      scriptedResponses: [''],
+      autoMode: true,
+      currentResponseIndex: 0,
+    },
+  ]);
   const [activeId, setActiveId] = useState<string | null>(null);
 
   const active = conversations.find((c) => c.id === activeId) ?? null;
