@@ -9,6 +9,7 @@ const Index = () => {
     conversations,
     active,
     activeId,
+    isTyping,
     setActiveId,
     createConversation,
     updateConversation,
@@ -40,7 +41,7 @@ const Index = () => {
         onCreate={createConversation}
         onDelete={deleteConversation}
       />
-      <ChatArea conversation={active} onSend={sendMessage} />
+      <ChatArea conversation={active} onSend={sendMessage} isTyping={isTyping} />
       <ControlPanel conversation={active} onUpdate={updateConversation} onTrigger={triggerResponse} />
     </div>
   );

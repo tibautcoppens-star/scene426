@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useRef } from 'react';
 import { Conversation, Message } from '@/types/messenger';
 
 const createId = () => Math.random().toString(36).slice(2, 10);
@@ -32,6 +32,8 @@ export function useMessenger() {
     },
   ]);
   const [activeId, setActiveId] = useState<string | null>('1');
+  const [isTyping, setIsTyping] = useState(false);
+  const typingTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const active = conversations.find((c) => c.id === activeId) ?? null;
 
@@ -69,34 +71,45 @@ export function useMessenger() {
         timestamp: new Date(),
       };
 
-      let updatedConv = {
+      const withUserMsg = {
         ...active,
         messages: [...active.messages, userMsg],
       };
 
-      // Auto respond if enabled and there are scripted responses
-      if (updatedConv.autoMode) {
-        const validResponses = updatedConv.scriptedResponses.filter((r) => r.trim());
+      setConversations((prev) =>
+        prev.map((c) => (c.id === active.id ? withUserMsg : c))
+      );
+
+      // Auto respond with typing delay
+      if (active.autoMode) {
+        const validResponses = active.scriptedResponses.filter((r) => r.trim());
         if (validResponses.length > 0) {
-          const idx = updatedConv.currentResponseIndex % validResponses.length;
-          const botMsg: Message = {
-            id: createId(),
-            conversationId: active.id,
-            content: validResponses[idx],
-            sender: 'bot',
-            timestamp: new Date(),
-          };
-          updatedConv = {
-            ...updatedConv,
-            messages: [...updatedConv.messages, botMsg],
-            currentResponseIndex: idx + 1,
-          };
+          const idx = active.currentResponseIndex % validResponses.length;
+          setIsTyping(true);
+          if (typingTimeoutRef.current) clearTimeout(typingTimeoutRef.current);
+          typingTimeoutRef.current = setTimeout(() => {
+            const botMsg: Message = {
+              id: createId(),
+              conversationId: active.id,
+              content: validResponses[idx],
+              sender: 'bot',
+              timestamp: new Date(),
+            };
+            setConversations((prev) =>
+              prev.map((c) =>
+                c.id === active.id
+                  ? {
+                      ...c,
+                      messages: [...c.messages, botMsg],
+                      currentResponseIndex: idx + 1,
+                    }
+                  : c
+              )
+            );
+            setIsTyping(false);
+          }, 1200);
         }
       }
-
-      setConversations((prev) =>
-        prev.map((c) => (c.id === active.id ? updatedConv : c))
-      );
     },
     [active]
   );
@@ -106,30 +119,36 @@ export function useMessenger() {
     const validResponses = active.scriptedResponses.filter((r) => r.trim());
     if (validResponses.length === 0) return;
     const idx = active.currentResponseIndex % validResponses.length;
-    const botMsg: Message = {
-      id: createId(),
-      conversationId: active.id,
-      content: validResponses[idx],
-      sender: 'bot',
-      timestamp: new Date(),
-    };
-    setConversations((prev) =>
-      prev.map((c) =>
-        c.id === active.id
-          ? {
-              ...c,
-              messages: [...c.messages, botMsg],
-              currentResponseIndex: idx + 1,
-            }
-          : c
-      )
-    );
+    setIsTyping(true);
+    if (typingTimeoutRef.current) clearTimeout(typingTimeoutRef.current);
+    typingTimeoutRef.current = setTimeout(() => {
+      const botMsg: Message = {
+        id: createId(),
+        conversationId: active.id,
+        content: validResponses[idx],
+        sender: 'bot',
+        timestamp: new Date(),
+      };
+      setConversations((prev) =>
+        prev.map((c) =>
+          c.id === active.id
+            ? {
+                ...c,
+                messages: [...c.messages, botMsg],
+                currentResponseIndex: idx + 1,
+              }
+            : c
+        )
+      );
+      setIsTyping(false);
+    }, 1200);
   }, [active]);
 
   return {
     conversations,
     active,
     activeId,
+    isTyping,
     setActiveId,
     createConversation,
     updateConversation,
