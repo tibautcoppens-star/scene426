@@ -9,6 +9,7 @@ const Index = () => {
     conversations,
     active,
     activeId,
+    isTyping,
     setActiveId,
     createConversation,
     updateConversation,
