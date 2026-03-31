@@ -119,30 +119,36 @@ export function useMessenger() {
     const validResponses = active.scriptedResponses.filter((r) => r.trim());
     if (validResponses.length === 0) return;
     const idx = active.currentResponseIndex % validResponses.length;
-    const botMsg: Message = {
-      id: createId(),
-      conversationId: active.id,
-      content: validResponses[idx],
-      sender: 'bot',
-      timestamp: new Date(),
-    };
-    setConversations((prev) =>
-      prev.map((c) =>
-        c.id === active.id
-          ? {
-              ...c,
-              messages: [...c.messages, botMsg],
-              currentResponseIndex: idx + 1,
-            }
-          : c
-      )
-    );
+    setIsTyping(true);
+    if (typingTimeoutRef.current) clearTimeout(typingTimeoutRef.current);
+    typingTimeoutRef.current = setTimeout(() => {
+      const botMsg: Message = {
+        id: createId(),
+        conversationId: active.id,
+        content: validResponses[idx],
+        sender: 'bot',
+        timestamp: new Date(),
+      };
+      setConversations((prev) =>
+        prev.map((c) =>
+          c.id === active.id
+            ? {
+                ...c,
+                messages: [...c.messages, botMsg],
+                currentResponseIndex: idx + 1,
+              }
+            : c
+        )
+      );
+      setIsTyping(false);
+    }, 1200);
   }, [active]);
 
   return {
     conversations,
     active,
     activeId,
+    isTyping,
     setActiveId,
     createConversation,
     updateConversation,
