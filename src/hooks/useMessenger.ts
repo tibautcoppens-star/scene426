@@ -16,7 +16,7 @@ export function useMessenger() {
   const [conversations, setConversations] = useState<Conversation[]>([
     {
       id: '1',
-      name: 'WILLEM DIE MEDOCK MAECKTE',
+      name: '\nWILLEM DIE MEDOCK MAECKTE\n\n',
       messages: [],
       scriptedResponses: [''],
       autoMode: true,
