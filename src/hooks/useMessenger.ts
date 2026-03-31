@@ -31,7 +31,7 @@ export function useMessenger() {
       currentResponseIndex: 0,
     },
   ]);
-  const [activeId, setActiveId] = useState<string | null>(null);
+  const [activeId, setActiveId] = useState<string | null>('1');
 
   const active = conversations.find((c) => c.id === activeId) ?? null;
 
