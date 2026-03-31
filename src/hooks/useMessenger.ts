@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useRef } from 'react';
 import { Conversation, Message } from '@/types/messenger';
 
 const createId = () => Math.random().toString(36).slice(2, 10);
