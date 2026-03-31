@@ -5,7 +5,7 @@ const createId = () => Math.random().toString(36).slice(2, 10);
 
 const defaultConversation = (): Conversation => ({
   id: createId(),
-  name: 'New Chat',
+  name: 'DE TOEKOMST ZIJN WIJ',
   messages: [],
   scriptedResponses: [''],
   autoMode: true,

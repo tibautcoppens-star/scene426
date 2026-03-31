@@ -18,7 +18,7 @@ export default function ConversationSidebar({ conversations, activeId, onSelect,
           <Plus className="w-4 h-4 text-muted-foreground" />
         </button>
       </div>
-      <div className="flex-1 overflow-y-auto scrollbar-thin p-2 space-y-1">
+      <div className="flex-1 overflow-y-auto scrollbar-thin p-2 space-y-1 rounded-none border-solid">
         {conversations.length === 0 && (
           <p className="text-xs text-muted-foreground text-center mt-8">No conversations</p>
         )}
