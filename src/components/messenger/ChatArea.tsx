@@ -65,7 +65,7 @@ export default function ChatArea({ conversation, onSend }: Props) {
             value={input}
             onChange={(e) => setInput(e.target.value)}
             onKeyDown={(e) => e.key === 'Enter' && handleSend()}
-            placeholder="Ask a question"
+            placeholder="Insert message"
             className="flex-1 bg-transparent text-sm text-foreground placeholder:text-muted-foreground outline-none"
           />
           <button onClick={handleSend} className="p-1.5 rounded-full hover:bg-primary/20 transition-colors text-primary">
