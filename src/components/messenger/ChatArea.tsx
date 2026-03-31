@@ -5,6 +5,7 @@ import { Conversation } from '@/types/messenger';
 interface Props {
   conversation: Conversation | null;
   onSend: (content: string) => void;
+  isTyping?: boolean;
 }
 
 export default function ChatArea({ conversation, onSend }: Props) {
