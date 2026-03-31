@@ -71,34 +71,45 @@ export function useMessenger() {
         timestamp: new Date(),
       };
 
-      let updatedConv = {
+      const withUserMsg = {
         ...active,
         messages: [...active.messages, userMsg],
       };
 
-      // Auto respond if enabled and there are scripted responses
-      if (updatedConv.autoMode) {
-        const validResponses = updatedConv.scriptedResponses.filter((r) => r.trim());
+      setConversations((prev) =>
+        prev.map((c) => (c.id === active.id ? withUserMsg : c))
+      );
+
+      // Auto respond with typing delay
+      if (active.autoMode) {
+        const validResponses = active.scriptedResponses.filter((r) => r.trim());
         if (validResponses.length > 0) {
-          const idx = updatedConv.currentResponseIndex % validResponses.length;
-          const botMsg: Message = {
-            id: createId(),
-            conversationId: active.id,
-            content: validResponses[idx],
-            sender: 'bot',
-            timestamp: new Date(),
-          };
-          updatedConv = {
-            ...updatedConv,
-            messages: [...updatedConv.messages, botMsg],
-            currentResponseIndex: idx + 1,
-          };
+          const idx = active.currentResponseIndex % validResponses.length;
+          setIsTyping(true);
+          if (typingTimeoutRef.current) clearTimeout(typingTimeoutRef.current);
+          typingTimeoutRef.current = setTimeout(() => {
+            const botMsg: Message = {
+              id: createId(),
+              conversationId: active.id,
+              content: validResponses[idx],
+              sender: 'bot',
+              timestamp: new Date(),
+            };
+            setConversations((prev) =>
+              prev.map((c) =>
+                c.id === active.id
+                  ? {
+                      ...c,
+                      messages: [...c.messages, botMsg],
+                      currentResponseIndex: idx + 1,
+                    }
+                  : c
+              )
+            );
+            setIsTyping(false);
+          }, 1200);
         }
       }
-
-      setConversations((prev) =>
-        prev.map((c) => (c.id === active.id ? updatedConv : c))
-      );
     },
     [active]
   );
