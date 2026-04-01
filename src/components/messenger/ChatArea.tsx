@@ -49,7 +49,7 @@ export default function ChatArea({ conversation, onSend, isTyping }: Props) {
               className={`max-w-[70%] px-4 py-2.5 rounded-2xl text-sm leading-relaxed ${
                 msg.sender === 'user'
                   ? 'bg-muted text-muted-foreground rounded-br-md'
-                  : 'bg-muted text-muted-foreground rounded-bl-md'
+                  : 'bg-primary text-primary-foreground rounded-bl-md'
               }`}
             >
               {msg.content}
