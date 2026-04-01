@@ -139,8 +139,8 @@ export default function ControlPanel({ conversation, onUpdate, onTrigger }: Prop
           )}
 
           {/* Scripted responses */}
-          <div>
-            <label className="text-xs text-muted-foreground uppercase tracking-wider">Scripted responses</label>
+          <div className="bg-primary/20 rounded-lg p-3">
+            <label className="text-xs text-primary-foreground/70 uppercase tracking-wider">Scripted responses</label>
             <div className="mt-2 space-y-2">
               {conversation.scriptedResponses.map((resp, i) => (
                 <div key={i} className="relative">
@@ -148,7 +148,7 @@ export default function ControlPanel({ conversation, onUpdate, onTrigger }: Prop
                     value={resp}
                     onChange={(e) => updateResponse(i, e.target.value)}
                     placeholder="New response..."
-                    className="w-full bg-input text-sm text-foreground px-3 py-2 rounded-lg outline-none focus:ring-1 focus:ring-ring resize-none min-h-[60px] placeholder:text-muted-foreground"
+                    className="w-full bg-primary/30 text-sm text-foreground px-3 py-2 rounded-lg outline-none focus:ring-1 focus:ring-ring resize-none min-h-[60px] placeholder:text-muted-foreground"
                     rows={2}
                   />
                   <div className="flex items-center justify-between mt-0.5 px-1">
@@ -167,7 +167,7 @@ export default function ControlPanel({ conversation, onUpdate, onTrigger }: Prop
             </div>
             <button
               onClick={addResponse}
-              className="mt-2 w-full flex items-center justify-center gap-1.5 py-2 text-sm text-muted-foreground hover:text-foreground hover:bg-secondary rounded-lg transition-colors"
+              className="mt-2 w-full flex items-center justify-center gap-1.5 py-2 text-sm text-muted-foreground hover:text-foreground hover:bg-primary/30 rounded-lg transition-colors"
             >
               <Plus className="w-3.5 h-3.5" />
               Add
