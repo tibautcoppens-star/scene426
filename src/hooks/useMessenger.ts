@@ -11,7 +11,11 @@ const defaultConversations: Conversation[] = [
     id: '1',
     name: '\nWILLEM DIE MEDOCK MAECKTE\n\n',
     messages: [],
-    scriptedResponses: ['Ik neem je wel serieus,ik weet wat je al gedaan hebt. Je moet gewoon nog even geduld hebben. Jouw moment komt nog...'],
+    scriptedResponses: [
+      'Ja net antwoord gekregen.',
+      'Ik snap dat je bij onze groep wil, maar het is niet zo eenvoudig.',
+      'Ik neem je wel serieus, ik weet wat je al gedaan hebt. Je moet gewoon nog even geduld hebben. Jouw moment komt nog...',
+    ],
     autoMode: true,
     currentResponseIndex: 0,
   },
