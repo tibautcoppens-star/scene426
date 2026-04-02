@@ -6,6 +6,7 @@ interface Props {
   conversation: Conversation | null;
   onUpdate: (id: string, patch: Partial<Conversation>) => void;
   onTrigger: () => void;
+  onTriggerMessage: () => void;
 }
 
 export default function ControlPanel({ conversation, onUpdate, onTrigger }: Props) {
