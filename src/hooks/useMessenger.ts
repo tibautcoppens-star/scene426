@@ -23,8 +23,14 @@ const defaultConversations: Conversation[] = [
       'Ik snap dat je bij onze groep wil, maar het is niet zo eenvoudig.',
       'Ik neem je wel serieus, ik weet wat je al gedaan hebt. Je moet gewoon nog even geduld hebben. Jouw moment komt nog...',
     ],
+    scriptedMessages: [
+      'Heb je al meer nieuws?',
+      'Ik sta te popelen om mijn steentje bij te dragen.',
+      'De wereld staat in brand en niemand doet iets. Ik wil iets doen, maar niemand neemt mij serieus. Zelfs jij niet!',
+    ],
     autoMode: true,
     currentResponseIndex: 0,
+    currentMessageIndex: 0,
   },
   {
     id: '2',
