@@ -44,7 +44,7 @@ export default function ChatArea({ conversation, onSend, isTyping }: Props) {
           <p className="text-center text-muted-foreground text-lg mt-32">How can I help you today?</p>
         )}
         {conversation.messages.map((msg) => (
-          <div key={msg.id} className={`flex ${msg.sender === 'user' ? 'justify-end' : 'justify-start'}`}>
+          <div key={msg.id} className="flex justify-start">
             <div
               className={`max-w-[70%] px-4 py-2.5 rounded-2xl text-sm leading-relaxed ${
                 msg.sender === 'user'
