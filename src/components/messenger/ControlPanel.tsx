@@ -141,6 +141,20 @@ export default function ControlPanel({ conversation, onUpdate, onTrigger, onTrig
             </div>
           )}
 
+          {/* Trigger scripted message */}
+          {validMsgCount > 0 && (
+            <div className="space-y-1">
+              <p className="text-xs text-muted-foreground">Trigger user message</p>
+              <button
+                onClick={onTriggerMessage}
+                className="w-full flex items-center justify-center gap-2 py-2 px-3 bg-muted hover:bg-muted/80 text-muted-foreground rounded-lg text-sm transition-colors"
+              >
+                <Play className="w-3.5 h-3.5" />
+                Send message ({currentMsgIdx}/{validMsgCount})
+              </button>
+            </div>
+          )}
+
           {/* Scripted responses */}
           <div className="bg-primary/20 rounded-lg p-3">
             <label className="text-xs text-primary-foreground/70 uppercase tracking-wider">Scripted responses</label>
