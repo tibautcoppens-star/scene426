@@ -9,7 +9,7 @@ interface Props {
   onTriggerMessage: () => void;
 }
 
-export default function ControlPanel({ conversation, onUpdate, onTrigger }: Props) {
+export default function ControlPanel({ conversation, onUpdate, onTrigger, onTriggerMessage }: Props) {
   const [collapsed, setCollapsed] = useState(false);
   const [editingName, setEditingName] = useState(false);
   const [nameInput, setNameInput] = useState('');
