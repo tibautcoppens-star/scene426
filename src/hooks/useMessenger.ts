@@ -63,6 +63,11 @@ function loadConversations(): Conversation[] {
       return parsed.map((c: any) => ({
         ...c,
         messages: c.messages.map((m: any) => ({ ...m, timestamp: new Date(m.timestamp) })),
+        scriptedMessages: c.scriptedMessages ?? [''],
+        currentMessageIndex: c.currentMessageIndex ?? 0,
+        scriptedResponses: c.scriptedResponses ?? [''],
+        currentResponseIndex: c.currentResponseIndex ?? 0,
+        autoMode: c.autoMode ?? true,
       }));
     }
   } catch {}
