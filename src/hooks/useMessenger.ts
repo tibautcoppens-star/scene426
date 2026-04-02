@@ -23,16 +23,24 @@ const defaultConversations: Conversation[] = [
       'Ik snap dat je bij onze groep wil, maar het is niet zo eenvoudig.',
       'Ik neem je wel serieus, ik weet wat je al gedaan hebt. Je moet gewoon nog even geduld hebben. Jouw moment komt nog...',
     ],
+    scriptedMessages: [
+      'Heb je al meer nieuws?',
+      'Ik sta te popelen om mijn steentje bij te dragen.',
+      'De wereld staat in brand en niemand doet iets. Ik wil iets doen, maar niemand neemt mij serieus. Zelfs jij niet!',
+    ],
     autoMode: true,
     currentResponseIndex: 0,
+    currentMessageIndex: 0,
   },
   {
     id: '2',
     name: 'DE TOEKOMST ZIJN WIJ',
     messages: [],
     scriptedResponses: [''],
+    scriptedMessages: [''],
     autoMode: true,
     currentResponseIndex: 0,
+    currentMessageIndex: 0,
   },
 ];
 
@@ -41,8 +49,10 @@ const defaultConversation = (): Conversation => ({
   name: 'DE TOEKOMST ZIJN WIJ',
   messages: [],
   scriptedResponses: [''],
+  scriptedMessages: [''],
   autoMode: true,
   currentResponseIndex: 0,
+  currentMessageIndex: 0,
 });
 
 function loadConversations(): Conversation[] {
@@ -186,6 +196,65 @@ export function useMessenger() {
     }, 1200);
   }, [active]);
 
+  const triggerMessage = useCallback(() => {
+    if (!active) return;
+    const validMessages = active.scriptedMessages.filter((m) => m.trim());
+    if (validMessages.length === 0) return;
+    const idx = active.currentMessageIndex % validMessages.length;
+    const content = validMessages[idx];
+
+    const userMsg: Message = {
+      id: createId(),
+      conversationId: active.id,
+      content,
+      sender: 'user',
+      timestamp: new Date(),
+    };
+
+    setConversations((prev) =>
+      prev.map((c) =>
+        c.id === active.id
+          ? {
+              ...c,
+              messages: [...c.messages, userMsg],
+              currentMessageIndex: idx + 1,
+            }
+          : c
+      )
+    );
+
+    // Auto-trigger bot response after user message
+    if (active.autoMode) {
+      const validResponses = active.scriptedResponses.filter((r) => r.trim());
+      if (validResponses.length > 0) {
+        const rIdx = active.currentResponseIndex % validResponses.length;
+        setIsTyping(true);
+        if (typingTimeoutRef.current) clearTimeout(typingTimeoutRef.current);
+        typingTimeoutRef.current = setTimeout(() => {
+          const botMsg: Message = {
+            id: createId(),
+            conversationId: active.id,
+            content: validResponses[rIdx],
+            sender: 'bot',
+            timestamp: new Date(),
+          };
+          setConversations((prev) =>
+            prev.map((c) =>
+              c.id === active.id
+                ? {
+                    ...c,
+                    messages: [...c.messages, botMsg],
+                    currentResponseIndex: rIdx + 1,
+                  }
+                : c
+            )
+          );
+          setIsTyping(false);
+        }, 1200);
+      }
+    }
+  }, [active]);
+
   return {
     conversations,
     active,
@@ -197,5 +266,6 @@ export function useMessenger() {
     deleteConversation,
     sendMessage,
     triggerResponse,
+    triggerMessage,
   };
 }

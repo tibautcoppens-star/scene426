@@ -6,9 +6,10 @@ interface Props {
   conversation: Conversation | null;
   onUpdate: (id: string, patch: Partial<Conversation>) => void;
   onTrigger: () => void;
+  onTriggerMessage: () => void;
 }
 
-export default function ControlPanel({ conversation, onUpdate, onTrigger }: Props) {
+export default function ControlPanel({ conversation, onUpdate, onTrigger, onTriggerMessage }: Props) {
   const [collapsed, setCollapsed] = useState(false);
   const [editingName, setEditingName] = useState(false);
   const [nameInput, setNameInput] = useState('');
@@ -63,6 +64,8 @@ export default function ControlPanel({ conversation, onUpdate, onTrigger }: Prop
 
   const validCount = conversation?.scriptedResponses.filter((r) => r.trim()).length ?? 0;
   const currentIdx = conversation ? (conversation.currentResponseIndex % Math.max(validCount, 1)) + 1 : 0;
+  const validMsgCount = conversation?.scriptedMessages.filter((m) => m.trim()).length ?? 0;
+  const currentMsgIdx = conversation ? (conversation.currentMessageIndex % Math.max(validMsgCount, 1)) + 1 : 0;
 
   return (
     <div className="w-72 border-l border-border bg-panel flex flex-col h-full">
@@ -134,6 +137,20 @@ export default function ControlPanel({ conversation, onUpdate, onTrigger }: Prop
               >
                 <Play className="w-3.5 h-3.5" />
                 Trigger response ({currentIdx}/{validCount})
+              </button>
+            </div>
+          )}
+
+          {/* Trigger scripted message */}
+          {validMsgCount > 0 && (
+            <div className="space-y-1">
+              <p className="text-xs text-muted-foreground">Trigger user message</p>
+              <button
+                onClick={onTriggerMessage}
+                className="w-full flex items-center justify-center gap-2 py-2 px-3 bg-muted hover:bg-muted/80 text-muted-foreground rounded-lg text-sm transition-colors"
+              >
+                <Play className="w-3.5 h-3.5" />
+                Send message ({currentMsgIdx}/{validMsgCount})
               </button>
             </div>
           )}
