@@ -43,7 +43,7 @@ const Index = () => {
         onDelete={deleteConversation}
       />
       <ChatArea conversation={active} onSend={sendMessage} isTyping={isTyping} />
-      <ControlPanel conversation={active} onUpdate={updateConversation} onTrigger={triggerResponse} />
+      <ControlPanel conversation={active} onUpdate={updateConversation} onTrigger={triggerResponse} onTriggerMessage={triggerMessage} />
     </div>
   );
 };
