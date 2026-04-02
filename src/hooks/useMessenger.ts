@@ -49,8 +49,10 @@ const defaultConversation = (): Conversation => ({
   name: 'DE TOEKOMST ZIJN WIJ',
   messages: [],
   scriptedResponses: [''],
+  scriptedMessages: [''],
   autoMode: true,
   currentResponseIndex: 0,
+  currentMessageIndex: 0,
 });
 
 function loadConversations(): Conversation[] {
