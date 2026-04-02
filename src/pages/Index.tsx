@@ -16,6 +16,7 @@ const Index = () => {
     deleteConversation,
     sendMessage,
     triggerResponse,
+    triggerMessage,
   } = useMessenger();
 
   // Spacebar trigger for manual mode
