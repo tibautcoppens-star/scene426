@@ -11,6 +11,8 @@ export interface Conversation {
   name: string;
   messages: Message[];
   scriptedResponses: string[];
+  scriptedMessages: string[];
   autoMode: boolean;
   currentResponseIndex: number;
+  currentMessageIndex: number;
 }
