@@ -64,6 +64,8 @@ export default function ControlPanel({ conversation, onUpdate, onTrigger, onTrig
 
   const validCount = conversation?.scriptedResponses.filter((r) => r.trim()).length ?? 0;
   const currentIdx = conversation ? (conversation.currentResponseIndex % Math.max(validCount, 1)) + 1 : 0;
+  const validMsgCount = conversation?.scriptedMessages.filter((m) => m.trim()).length ?? 0;
+  const currentMsgIdx = conversation ? (conversation.currentMessageIndex % Math.max(validMsgCount, 1)) + 1 : 0;
 
   return (
     <div className="w-72 border-l border-border bg-panel flex flex-col h-full">
