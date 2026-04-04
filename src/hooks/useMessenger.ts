@@ -9,7 +9,7 @@ const createId = () => Math.random().toString(36).slice(2, 10);
 const defaultConversations: Conversation[] = [
   {
     id: '1',
-    name: '\nWILLEM DIE MEDOCK MAECKTE\n\n',
+    name: 'DE TOEKOMST ZIJN WIJ\n ',
     messages: [
       { id: 'u1', conversationId: '1', content: 'Heb je al meer nieuws?', sender: 'user', timestamp: new Date() },
       { id: 'b1', conversationId: '1', content: 'Ja net antwoord gekregen.', sender: 'bot', timestamp: new Date() },
