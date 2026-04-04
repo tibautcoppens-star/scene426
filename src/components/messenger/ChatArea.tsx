@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { Send } from 'lucide-react';
 import { Conversation } from '@/types/messenger';
+import TypewriterText from './TypewriterText';
 
 interface Props {
   conversation: Conversation | null;
@@ -10,6 +11,7 @@ interface Props {
 
 export default function ChatArea({ conversation, onSend, isTyping }: Props) {
   const [input, setInput] = useState('');
+  const [animatedIds, setAnimatedIds] = useState<Set<string>>(new Set());
   const bottomRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -52,7 +54,15 @@ export default function ChatArea({ conversation, onSend, isTyping }: Props) {
                   : 'bg-primary text-primary-foreground rounded-bl-md'
               }`}
             >
-              {msg.content}
+              {!animatedIds.has(msg.id) ? (
+                <TypewriterText
+                  text={msg.content}
+                  speed={msg.sender === 'bot' ? 25 : 15}
+                  onComplete={() => setAnimatedIds(prev => new Set(prev).add(msg.id))}
+                />
+              ) : (
+                msg.content
+              )}
             </div>
           </div>
         ))}
