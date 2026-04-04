@@ -11,6 +11,7 @@ interface Props {
 
 export default function ChatArea({ conversation, onSend, isTyping }: Props) {
   const [input, setInput] = useState('');
+  const [animatedIds, setAnimatedIds] = useState<Set<string>>(new Set());
   const bottomRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
