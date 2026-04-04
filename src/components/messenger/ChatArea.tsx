@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { Send } from 'lucide-react';
 import { Conversation } from '@/types/messenger';
+import TypewriterText from './TypewriterText';
 
 interface Props {
   conversation: Conversation | null;
