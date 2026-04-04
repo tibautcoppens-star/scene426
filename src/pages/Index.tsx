@@ -22,11 +22,15 @@ const Index = () => {
   // Spacebar trigger for manual mode
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
+      const tag = (e.target as HTMLElement).tagName;
+      if (tag === 'INPUT' || tag === 'TEXTAREA') return;
       if (e.code === 'Space' && active && !active.autoMode) {
-        const tag = (e.target as HTMLElement).tagName;
-        if (tag === 'INPUT' || tag === 'TEXTAREA') return;
         e.preventDefault();
         triggerResponse();
+      }
+      if (e.key === 'Enter' && active) {
+        e.preventDefault();
+        triggerMessage();
       }
     };
     window.addEventListener('keydown', handler);
