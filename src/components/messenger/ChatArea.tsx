@@ -57,7 +57,7 @@ export default function ChatArea({ conversation, onSend, isTyping }: Props) {
               {msg.sender === 'user' && !animatedIds.has(msg.id) ? (
                 <TypewriterText
                   text={msg.content}
-                  speed={120}
+                  speed={100}
                   onComplete={() => setAnimatedIds(prev => new Set(prev).add(msg.id))}
                 />
               ) : (
