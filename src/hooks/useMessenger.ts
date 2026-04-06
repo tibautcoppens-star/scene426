@@ -10,14 +10,7 @@ const defaultConversations: Conversation[] = [
   {
     id: '1',
     name: 'DE TOEKOMST ZIJN WIJ\n ',
-    messages: [
-      { id: 'u1', conversationId: '1', content: 'Heb je al meer nieuws?', sender: 'user', timestamp: new Date() },
-      { id: 'b1', conversationId: '1', content: 'Ja net antwoord gekregen.', sender: 'bot', timestamp: new Date() },
-      { id: 'u2', conversationId: '1', content: 'Ik sta te popelen om mijn steentje bij te dragen.', sender: 'user', timestamp: new Date() },
-      { id: 'b2', conversationId: '1', content: 'Ik snap dat je bij onze groep wil, maar het is niet zo eenvoudig.', sender: 'bot', timestamp: new Date() },
-      { id: 'u3', conversationId: '1', content: 'De wereld staat in brand en niemand doet iets. Ik wil iets doen, maar niemand neemt mij serieus. Zelfs jij niet!', sender: 'user', timestamp: new Date() },
-      { id: 'b3', conversationId: '1', content: 'Ik neem je wel serieus, ik weet wat je al gedaan hebt. Je moet gewoon nog even geduld hebben. Jouw moment komt nog...', sender: 'bot', timestamp: new Date() },
-    ],
+    messages: [],
     scriptedResponses: [
       'Ja net antwoord gekregen.',
       'Ik snap dat je bij onze groep wil, maar het is niet zo eenvoudig.',
