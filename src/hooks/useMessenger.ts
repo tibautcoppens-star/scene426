@@ -55,20 +55,38 @@ const defaultConversation = (): Conversation => ({
   currentMessageIndex: 0,
 });
 
+const hasMeaningfulItems = (items?: string[]) => Boolean(items?.some((item) => item.trim()));
+
+const mergeWithDefaultConversation = (conversation: any): Conversation => {
+  const defaultMatch = defaultConversations.find((item) => item.id === conversation.id);
+
+  return {
+    ...conversation,
+    name: conversation.name ?? defaultMatch?.name ?? 'DE TOEKOMST ZIJN WIJ',
+    messages:
+      Array.isArray(conversation.messages) && conversation.messages.length > 0
+        ? conversation.messages.map((m: any) => ({ ...m, timestamp: new Date(m.timestamp) }))
+        : (defaultMatch?.messages ?? []),
+    scriptedMessages: hasMeaningfulItems(conversation.scriptedMessages)
+      ? conversation.scriptedMessages
+      : (defaultMatch?.scriptedMessages ?? ['']),
+    currentMessageIndex: conversation.currentMessageIndex ?? 0,
+    scriptedResponses: hasMeaningfulItems(conversation.scriptedResponses)
+      ? conversation.scriptedResponses
+      : (defaultMatch?.scriptedResponses ?? ['']),
+    currentResponseIndex: conversation.currentResponseIndex ?? 0,
+    autoMode: conversation.autoMode ?? true,
+  };
+};
+
 function loadConversations(): Conversation[] {
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
     if (raw) {
       const parsed = JSON.parse(raw);
-      return parsed.map((c: any) => ({
-        ...c,
-        messages: c.messages.map((m: any) => ({ ...m, timestamp: new Date(m.timestamp) })),
-        scriptedMessages: c.scriptedMessages ?? [''],
-        currentMessageIndex: c.currentMessageIndex ?? 0,
-        scriptedResponses: c.scriptedResponses ?? [''],
-        currentResponseIndex: c.currentResponseIndex ?? 0,
-        autoMode: c.autoMode ?? true,
-      }));
+      if (Array.isArray(parsed) && parsed.length > 0) {
+        return parsed.map(mergeWithDefaultConversation);
+      }
     }
   } catch {}
   return defaultConversations;
