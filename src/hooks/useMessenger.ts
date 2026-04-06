@@ -56,10 +56,9 @@ const mergeWithDefaultConversation = (conversation: any): Conversation => {
   return {
     ...conversation,
     name: conversation.name ?? defaultMatch?.name ?? 'DE TOEKOMST ZIJN WIJ',
-    messages:
-      Array.isArray(conversation.messages) && conversation.messages.length > 0
-        ? conversation.messages.map((m: any) => ({ ...m, timestamp: new Date(m.timestamp) }))
-        : (defaultMatch?.messages ?? []),
+    messages: Array.isArray(conversation.messages) && conversation.messages.length > 0
+      ? conversation.messages.map((m: any) => ({ ...m, timestamp: new Date(m.timestamp) }))
+      : [],
     scriptedMessages: hasMeaningfulItems(conversation.scriptedMessages)
       ? conversation.scriptedMessages
       : (defaultMatch?.scriptedMessages ?? ['']),
