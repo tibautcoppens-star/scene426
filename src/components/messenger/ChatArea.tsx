@@ -48,10 +48,10 @@ export default function ChatArea({ conversation, onSend, isTyping }: Props) {
         {conversation.messages.map((msg) => (
           <div key={msg.id} className="flex justify-start">
             <div
-              className={`max-w-[70%] px-4 py-2.5 rounded-2xl text-sm leading-relaxed ${
+              className={`max-w-[70%] px-4 py-2.5 rounded-2xl text-sm leading-relaxed text-primary-foreground ${
                 msg.sender === 'user'
-                  ? 'bg-muted text-muted-foreground rounded-br-md'
-                  : 'bg-primary text-primary-foreground rounded-bl-md'
+                  ? 'bg-muted rounded-br-md'
+                  : 'bg-primary rounded-bl-md'
               }`}
             >
               {msg.sender === 'user' && !animatedIds.has(msg.id) ? (
