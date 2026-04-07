@@ -50,7 +50,7 @@ export default function ChatArea({ conversation, onSend, isTyping }: Props) {
             <div
               className={`max-w-[70%] px-4 py-2.5 rounded-2xl text-sm leading-relaxed text-primary-foreground ${
                 msg.sender === 'user'
-                  ? 'bg-muted rounded-br-md'
+                  ? 'bg-secondary rounded-br-md'
                   : 'bg-primary rounded-bl-md'
               }`}
             >
