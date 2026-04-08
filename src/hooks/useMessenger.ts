@@ -185,6 +185,7 @@ export function useMessenger() {
     const validResponses = active.scriptedResponses.filter((r) => r.trim());
     if (validResponses.length === 0) return;
     const idx = active.currentResponseIndex % validResponses.length;
+    const typingDelay = validResponses[idx].length > 80 ? 3500 : 1200;
     setIsTyping(true);
     if (typingTimeoutRef.current) clearTimeout(typingTimeoutRef.current);
     typingTimeoutRef.current = setTimeout(() => {
@@ -207,7 +208,7 @@ export function useMessenger() {
         )
       );
       setIsTyping(false);
-    }, 1200);
+    }, typingDelay);
   }, [active]);
 
   const triggerMessage = useCallback(() => {
