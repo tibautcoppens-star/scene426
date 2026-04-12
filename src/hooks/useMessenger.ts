@@ -9,7 +9,7 @@ const createId = () => Math.random().toString(36).slice(2, 10);
 const defaultConversations: Conversation[] = [
   {
     id: '1',
-    name: 'DE TOEKOMST ZIJN WIJ\n ',
+    name: 'WILLEM DIE MEDDOCK ',
     messages: [],
     scriptedResponses: [
       'Ja net antwoord gekregen.',
@@ -27,7 +27,7 @@ const defaultConversations: Conversation[] = [
   },
   {
     id: '2',
-    name: 'DE TOEKOMST ZIJN WIJ',
+    name: 'WILLEM DIE MEDDOCK MAECKTE ',
     messages: [],
     scriptedResponses: [''],
     scriptedMessages: [''],
@@ -39,7 +39,7 @@ const defaultConversations: Conversation[] = [
 
 const defaultConversation = (): Conversation => ({
   id: createId(),
-  name: 'DE TOEKOMST ZIJN WIJ',
+  name: 'WILLEM DIE MEDDOCK MAECKTE ',
   messages: [],
   scriptedResponses: [''],
   scriptedMessages: [''],
@@ -55,7 +55,7 @@ const mergeWithDefaultConversation = (conversation: any): Conversation => {
 
   return {
     ...conversation,
-    name: conversation.name ?? defaultMatch?.name ?? 'DE TOEKOMST ZIJN WIJ',
+    name: conversation.name ?? defaultMatch?.name ?? 'WILLEM DIE MEDDOCK MAECKTE ',
     messages: [],
     scriptedMessages: hasMeaningfulItems(conversation.scriptedMessages)
       ? conversation.scriptedMessages
