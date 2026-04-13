@@ -52,7 +52,11 @@ const hasMeaningfulItems = (items?: string[]) => Boolean(items?.some((item) => i
 
 const normalizeStoredName = (name?: string) => {
   if (!name) return name;
-  return name.includes('WILLEM DIE MEDDOCK') ? name.replace('MEDDOCK', 'MADOCK') : name;
+  let normalized = name.includes('WILLEM DIE MEDDOCK') ? name.replace('MEDDOCK', 'MADOCK') : name;
+  if (normalized.trim() === 'WILLEM DIE MADOCK') {
+    return 'WILLEM DIE MADOCK MAECKTE ';
+  }
+  return normalized;
 };
 
 const mergeWithDefaultConversation = (conversation: any): Conversation => {
