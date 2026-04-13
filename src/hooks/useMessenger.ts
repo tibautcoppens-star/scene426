@@ -50,12 +50,20 @@ const defaultConversation = (): Conversation => ({
 
 const hasMeaningfulItems = (items?: string[]) => Boolean(items?.some((item) => item.trim()));
 
+const normalizeStoredName = (name?: string) => {
+  if (!name) return name;
+  return name.includes('WILLEM DIE MEDDOCK') ? name.replace('MEDDOCK', 'MADOCK') : name;
+};
+
 const mergeWithDefaultConversation = (conversation: any): Conversation => {
   const defaultMatch = defaultConversations.find((item) => item.id === conversation.id);
 
   return {
     ...conversation,
-    name: conversation.name ?? defaultMatch?.name ?? 'WILLEM DIE MADOCK MAECKTE ',
+    name:
+      normalizeStoredName(conversation.name) ??
+      defaultMatch?.name ??
+      'WILLEM DIE MADOCK MAECKTE ',
     messages: [],
     scriptedMessages: hasMeaningfulItems(conversation.scriptedMessages)
       ? conversation.scriptedMessages
