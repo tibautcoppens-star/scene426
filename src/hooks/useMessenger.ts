@@ -9,12 +9,12 @@ const createId = () => Math.random().toString(36).slice(2, 10);
 const defaultConversations: Conversation[] = [
   {
     id: '1',
-    name: 'WILLEM DIE MADOCK ',
+    name: 'WILLEM DIE MADOCK MAECKTE ',
     messages: [],
     scriptedResponses: [
       'Ja net antwoord gekregen.',
       'Ik snap dat je bij onze groep wil, maar het is niet zo eenvoudig.',
-      'Ik neem je wel serieus, ik weet wat je al gedaan hebt. Je moet gewoon nog even geduld hebben. Jouw moment komt nog...',
+      'Ik neem je wel serieus, ik weet what je al gedaan hebt. Je moet gewoon nog even geduld hebben. Jouw moment komt nog...',
     ],
     scriptedMessages: [
       'Heb je al meer nieuws?',
@@ -27,7 +27,7 @@ const defaultConversations: Conversation[] = [
   },
   {
     id: '2',
-    name: 'WILLEM DIE MADOCK MAECKTE ',
+    name: 'WILLEM DIE MADOCK MAECKTE ',
     messages: [],
     scriptedResponses: [''],
     scriptedMessages: [''],
@@ -39,7 +39,7 @@ const defaultConversations: Conversation[] = [
 
 const defaultConversation = (): Conversation => ({
   id: createId(),
-  name: 'WILLEM DIE MADOCK MAECKTE ',
+  name: 'WILLEM DIE MADOCK MAECKTE ',
   messages: [],
   scriptedResponses: [''],
   scriptedMessages: [''],
@@ -52,7 +52,11 @@ const hasMeaningfulItems = (items?: string[]) => Boolean(items?.some((item) => i
 
 const normalizeStoredName = (name?: string) => {
   if (!name) return name;
-  return name.includes('WILLEM DIE MEDDOCK') ? name.replace('MEDDOCK', 'MADOCK') : name;
+  let normalized = name.includes('WILLEM DIE MEDDOCK') ? name.replace('MEDDOCK', 'MADOCK') : name;
+  if (normalized.trim() === 'WILLEM DIE MADOCK') {
+    return 'WILLEM DIE MADOCK MAECKTE ';
+  }
+  return normalized;
 };
 
 const mergeWithDefaultConversation = (conversation: any): Conversation => {
@@ -63,7 +67,7 @@ const mergeWithDefaultConversation = (conversation: any): Conversation => {
     name:
       normalizeStoredName(conversation.name) ??
       defaultMatch?.name ??
-      'WILLEM DIE MADOCK MAECKTE ',
+      'WILLEM DIE MADOCK MAECKTE ',
     messages: [],
     scriptedMessages: hasMeaningfulItems(conversation.scriptedMessages)
       ? conversation.scriptedMessages
