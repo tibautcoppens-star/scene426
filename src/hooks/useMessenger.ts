@@ -25,16 +25,6 @@ const defaultConversations: Conversation[] = [
     currentResponseIndex: 0,
     currentMessageIndex: 0,
   },
-  {
-    id: '2',
-    name: 'WILLEM DIE MADOC MAAKTE ',
-    messages: [],
-    scriptedResponses: [''],
-    scriptedMessages: [''],
-    autoMode: true,
-    currentResponseIndex: 0,
-    currentMessageIndex: 0,
-  },
 ];
 
 const defaultConversation = (): Conversation => ({
