@@ -9,7 +9,7 @@ const createId = () => Math.random().toString(36).slice(2, 10);
 const defaultConversations: Conversation[] = [
   {
     id: '1',
-    name: 'WILLEM DIE MADOC',
+    name: 'WILLEM DIE MADOC MAAKTE',
     messages: [],
     scriptedResponses: [
       'Ja net antwoord gekregen.',
@@ -29,7 +29,7 @@ const defaultConversations: Conversation[] = [
 
 const defaultConversation = (): Conversation => ({
   id: createId(),
-  name: 'WILLEM DIE MADOC',
+  name: 'WILLEM DIE MADOC MAAKTE',
   messages: [],
   scriptedResponses: [''],
   scriptedMessages: [''],
@@ -44,7 +44,7 @@ const normalizeStoredName = (name?: string) => {
   if (!name) return name;
   let normalized = name.includes('WILLEM DIE MEDDOCK') ? name.replace('MEDDOCK', 'MADOCK') : name;
   if (normalized.trim() === 'WILLEM DIE MADOCK' || normalized.trim() === 'WILLEM DIE MADOCK MAECKTE') {
-    return 'WILLEM DIE MADOC';
+    return 'WILLEM DIE MADOC MAAKTE';
   }
   return normalized;
 };
@@ -57,7 +57,7 @@ const mergeWithDefaultConversation = (conversation: any): Conversation => {
     name:
       normalizeStoredName(conversation.name) ??
       defaultMatch?.name ??
-      'WILLEM DIE MADOC',
+      'WILLEM DIE MADOC MAAKTE',
     messages: [],
     scriptedMessages: hasMeaningfulItems(conversation.scriptedMessages)
       ? conversation.scriptedMessages
