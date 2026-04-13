@@ -77,10 +77,18 @@ function loadConversations(): Conversation[] {
     if (raw) {
       const parsed = JSON.parse(raw);
       if (Array.isArray(parsed) && parsed.length > 0) {
-        return parsed.map(mergeWithDefaultConversation);
+        // Keep only conversations whose id exists in defaults
+        const validIds = new Set(defaultConversations.map((d) => d.id));
+        const filtered = parsed.filter((c: any) => validIds.has(c.id));
+        if (filtered.length > 0) {
+          const result = filtered.map(mergeWithDefaultConversation);
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(result));
+          return result;
+        }
       }
     }
   } catch {}
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(defaultConversations));
   return defaultConversations;
 }
 
