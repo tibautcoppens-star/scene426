@@ -42,11 +42,13 @@ const hasMeaningfulItems = (items?: string[]) => Boolean(items?.some((item) => i
 
 const normalizeStoredName = (name?: string) => {
   if (!name) return name;
-  let normalized = name.includes('WILLEM DIE MEDDOCK') ? name.replace('MEDDOCK', 'MADOCK') : name;
-  if (normalized.trim() === 'WILLEM DIE MADOCK' || normalized.trim() === 'WILLEM DIE MADOCK MAECKTE') {
+  const trimmed = name.trim();
+  // Normalize any old name variants to the canonical name
+  const oldNames = ['WILLEM DIE MEDDOCK', 'WILLEM DIE MADOCK', 'WILLEM DIE MADOCK MAECKTE', 'WILLEM DIE MADOC'];
+  if (oldNames.some((old) => trimmed === old || name.includes(old))) {
     return 'WILLEM DIE MADOC MAAKTE';
   }
-  return normalized;
+  return name;
 };
 
 const mergeWithDefaultConversation = (conversation: any): Conversation => {
